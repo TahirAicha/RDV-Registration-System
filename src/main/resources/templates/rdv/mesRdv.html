@@ -1,0 +1,35 @@
+<html   xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:th="http://www.thymeleaf.org"
+        xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+        xmlns:layout="http://www.w3.org/1999/xhtml" layout:decorate="~{fragments/main_layout}">
+
+ <div layout:fragment="content" class="container">
+ <a th:href="@{/rdv}">Ajouter un rendez vous/a>
+
+<div class="col-md-10">
+				<div class="panel panel-primary" >
+					<div class="panel-heading" >Liste RDV</div>
+					<div class="panel-body">
+							<table class= "table table-striped">
+								<tr>
+								<th>Categorie de service</th><th>Service</th><th>Prestataire</th><th>Date de rendez vous</th><th>Action</th>
+								</tr>
+								<tr th:each="rdv: ${listRdv}"  >
+									<!-- <td th:text="${rdv.categorie}"></td> -->
+									<td th:text="${rdv.service.categorie.designation}"></td>
+									<td th:text="${rdv.service.designation}"></td>
+									<td th:text="${rdv.service.employe.nom } "></td>
+									<td th:text="${rdv.dateRdv.format(sprint.releaseDate, 'dd-MMM-yyyy')}" ></td>
+									
+									<td>
+	            					<a class="btn btn-warning btn-xs" th:href="@{'/editApp/'+${rdv.id}}">Modifier</a>
+							        <a class="btn btn-danger btn-xs" th:href="@{'/deleteApp/'+${rdv.id}}">Annuler</a>
+		         				    </td>
+									
+								</tr>
+							</table>
+					</div>
+				</div>
+</div>
+</div>
+</html>

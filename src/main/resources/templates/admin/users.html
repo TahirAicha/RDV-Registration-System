@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html   xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:th="http://www.thymeleaf.org"
+        xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+        xmlns:layout="http://www.w3.org/1999/xhtml" layout:decorate="~{fragments/main_layout}">
+
+ <div layout:fragment="content" class="container">
+	<div class="panel panel-primary">
+					<div class="panel-heading" >Search</div>
+					<div class="panel-body">
+							<form th:action="@{/getUser}" method="get">
+								<div>
+								 
+									<label>Cin:</label>
+									<input type="text" name="cin"/>
+									<button type="submit" class="btn btn-primary">OK</button>
+								</div>
+							</form>
+							<div class="text-danger" th:if="${exception}" th:text="${exception.message}"></div>
+					</div>
+				</div>
+			
+	
+			<div class="col-md-6">
+				<div class="panel panel-primary" th:if="${user}" >
+					<div class="panel-heading" >User</div>
+					<div class="panel-body">
+						<div>
+							<label>Cin:</label>
+							<label th:text="${user.cin}" ></label>
+						</div>	
+						<div>
+							<label>Nom:</label>
+							<label th:text="${user.nom}" ></label>
+						</div>	
+						<div>
+							<label>Prenom:</label>
+							<label th:text="${user.prenom}" ></label>
+						</div>	
+						<div>
+							<label>Adresse:</label>
+							<label th:text="${user.adresse}" ></label>
+						</div>
+							
+					</div>
+				</div>
+			</div>
+	
+	
+			<div class="col-md-12">
+				<div class="panel panel-primary" th:if="${listUsers}" >
+					<div class="panel-heading" >Liste utilisateurs</div>
+					<div class="panel-body">
+							<table class= "table table-striped">
+								<tr>
+								<th>Cin</th><th>Nom</th><th>Prenom</th><th>Adresse</th><th>Date de naissance</th><th>Active</th><th>Action</th>
+								</tr>
+								<tr th:each="u:${listUsers}" >
+									<td th:text="${u.cin}"></td>
+									<td th:text="${u.nom}"></td>
+									<td th:text="${u.prenom}"></td>
+									<td th:text="${u.adresse}"></td>
+									<td th:text="${u.DateDeNaissance}"></td>
+									<td th:text="${u.active}"></td>
+									<td>
+	            					<a class="btn btn-warning btn-xs" th:href="@{'/edit/'+${u.cin}}">Modifier</a>
+							        <a class="btn btn-danger btn-xs" th:href="@{'/delete/'+${u.cin}}">Supp</a>
+		         				    </td>
+									
+								</tr>
+							</table>
+					</div>
+				</div>
+			</div>
+</div>
+</html>

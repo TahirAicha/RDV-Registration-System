@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html
+		xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:th="http://www.thymeleaf.org"
+        xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        
+        >
+<head>
+<meta charset="utf-8">
+<title>User</title>
+		<link href="webjars/bootstrap/3.3.6/css/bootstrap.min.css"
+        rel="stylesheet">
+		<script src="webjars/jquery/1.9.1/jquery.min.js"></script>
+		<script src="webjars/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+		<link href="webjars/bootstrap/3.3.6/css/bootstrap.min.css"
+			  rel="stylesheet">
+</head>
+<body>
+	<h1>TEST.</h1>
+	
+	<div class="col-md-6">
+		<div sec:authorize="hasRole('ROLE_ADMIN')">
+                    This content is only shown to administrators.
+         </div>
+				<div class="panel panel-primary" th:if="${listUsers}" >
+					<div class="panel-heading" >Liste utilisateurs</div>
+					<div class="panel-body">
+							<table class= "table table-striped">
+								<tr>
+								<th>Cin</th><th>Nom</th><th>Prenom</th><th>Adresse</th><th>Date de naissance</th><th>Active</th><th>Action</th>
+								</tr>
+								<tr th:each="u:${listUsers}" >
+									<td th:text="${u.cin}"></td>
+									<td th:text="${u.nom}"></td>
+									<td th:text="${u.prenom}"></td>
+									<td th:text="${u.adresse}"></td>
+									<td th:text="${u.DateDeNaissance}"></td>
+									<td th:text="${u.active}"></td>
+									<td>
+	            					<a class="btn btn-warning btn-xs" th:href="@{'/edit/'+${u.cin}}">Modifier</a>
+							        <a class="btn btn-danger btn-xs" th:href="@{'/delete/'+${u.cin}}">Supp</a>
+		         				    </td>
+									
+								</tr>
+							</table>
+					</div>
+				</div>
+			</div>
+	
+
+</body>
+</html>

@@ -1,0 +1,75 @@
+<html   xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:th="http://www.thymeleaf.org"
+        xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+        xmlns:layout="http://www.w3.org/1999/xhtml" layout:decorate="~{fragments/main_layout3}">
+        		
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+    <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+    <script src="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+	<link rel="stylesheet" type="text/css" th:href="@{/css/style.css}">
+	<script type="text/javascript" th:src="@{/js/jss.js}" ></script>
+
+</head>
+ <div layout:fragment="content" class="container">
+     
+  
+<!-- <div class="col-md-20">
+				<div class="panel panel-primary" >
+					<div class="panel-heading" >Liste des services</div>
+					<div class="panel-body">
+							<table class= "table table-striped">
+								<tr>
+								<th>Categorie de service</th><th>Designation</th><th>Durée de rendez vous</th><th>prix</th><th>Action</th>
+								</tr>
+								<tr th:each="srv: ${serviceList}"  >
+									<td th:text="${rdv.categorie}"></td>
+									<td th:text="${srv.categorie.designation}"></td>
+									<td th:text="${srv.designation}"></td>
+									<td th:text="${srv.duree}"></td>
+									<td th:text="${srv.prix}"></td>
+									<td>
+		            					<a class="btn btn-warning btn-xs" th:href="@{'/editService/'+${srv.id}}">Modifier</a>
+								        <a class="btn btn-danger btn-xs" th:href="@{'/deleteService/'+${srv.id}}">Supp</a>
+		         				    </td>
+									
+								</tr>
+							</table>
+					</div>
+				</div>
+</div>
+</p> -->
+<div class="container service" >
+	
+	    <p >
+	    	<center style="font-style: italic; font-size: xx-large; padding-top:20px; padding-bottom:40px ">SERVICES DISPONIBLES</center>
+	    </p>
+	   
+	    
+	    <ul  class="panel-group" id="accordion" role="tablist" aria-multiselectable="true" >
+			<div th:each="srv: ${serviceList}"  >
+		        <li class="panel-default"  >
+		        	
+		                
+			        	<h5 th:text="${srv.categorie.designation}"></h5>
+			        	<h4 th:text="${srv.designation}"></h4>
+			        	<h th:text="${srv.duree}"></h>
+						<h th:text="${srv.prix}"></h>
+						
+		            	<button style=" background-color: pink; righ:5px; float: right; clear: right; margin-bottom:10px;" type="button" class="btn btn-success-outline">Voir plus</button>
+		            	<button style=" background-color: pink; float: right; clear: right;word-break:break-all;" type="button" class="btn btn-success-outline">Prendre un rendez-vous</button>
+		           	
+		         </li> 
+		        
+	         </div>
+	
+	    </ul><!-- panel-group -->
+	    
+	   
+	 
+	    
+</div>
+	
+ </div>
+ </html>

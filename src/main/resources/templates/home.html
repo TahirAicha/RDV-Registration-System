@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html   xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:th="http://www.thymeleaf.org"
+        xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+        xmlns:layout="http://www.w3.org/1999/xhtml" layout:decorate="~{fragments/main_layout}">
+
+ <div layout:fragment="content" class="container">
+ 			<div>Bonjour</div>
+			<div th:text="${userName}"> </div>
+			<div class="col-md-6"  >
+			
+				<div sec:authorize="hasRole('ROLE_ADMIN')">
+				<span th:text="${#authentication.getPrincipal().getUsername()}"></span>
+                    This content is only shown to administrators.
+                </div>
+				<div class="panel panel-primary">
+					<div class="panel-heading" >Search</div>
+					<div class="panel-body">
+							<form th:action="@{/getUser}" method="get">
+								<div>
+								 
+									<label>Cin:</label>
+									<input type="text" name="cin"/>
+									<button type="submit" class="btn btn-primary">OK</button>
+								</div>
+							</form>
+							<div class="text-danger" th:if="${exception}" th:text="${exception.message}"></div>
+					</div>
+				</div>
+			</div>
+	
+			<div class="col-md-20" th:if="${listRdvNonConfirmes}">
+				<div class="panel panel-primary" >
+					<div class="panel-heading" >Liste RDV</div>
+					<div class="panel-body">
+							<table class= "table table-striped">
+								<tr>
+								<th>Categorie de service</th><th>Service</th><th>Prestataire</th><th>Date de rendez vous</th><th>Action</th>
+								</tr>
+								<tr th:each="rdv: ${listRdvNonConfirmes}"  >
+									<!-- <td th:text="${rdv.categorie}"></td> -->
+									<td th:text="${rdv.service.categorie.designation}"></td>
+									<td th:text="${rdv.service.designation}"></td>
+									<td th:text="${rdv.service.employe.nom } "></td>
+									<td th:text="${rdv.dateRdv}"></td>
+									
+									<td>
+	            					<a class="btn btn-warning btn-xs" th:href="@{'/editApp/'+${rdv.id}}">Modifier</a>
+							        <a class="btn btn-danger btn-xs" th:href="@{'/deleteApp/'+${rdv.id}}">Annuler</a>
+		         				    </td>
+									
+								</tr>
+							</table>
+					</div>
+				</div>
+		</div>
+		<div class="col-md-20">
+				<div class="panel panel-primary" >
+					<div class="panel-heading" >Liste RDV confirmés</div>
+					<div class="panel-body">
+							<table class= "table table-striped">
+								<tr>
+								<th>Categorie de service</th><th>Service</th><th>Prestataire</th><th>Date de rendez vous</th><th>Action</th>
+								</tr>
+								<tr th:each="rdv: ${listRdvConfirmes}"  >
+									<!-- <td th:text="${rdv.categorie}"></td> -->
+									<td th:text="${rdv.service.categorie.designation}"></td>
+									<td th:text="${rdv.service.designation}"></td>
+									<td th:text="${rdv.service.employe.nom } "></td>
+									<td th:text="${rdv.dateRdv}"></td>
+									
+									<td>
+									 <a class="btn btn-danger btn-xs" th:href="@{'/deleteApp/'+${rdv.id}}">Annuler</a>
+		         				    </td>
+									
+								</tr>
+							</table>
+					</div>
+				</div>
+	</div>
+	<div class="col-md-10">
+				<div class="panel panel-primary" >
+					<div class="panel-heading" >Performance</div>
+					<div class="panel-body">
+						  <html>
+							  <head>
+							    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+							    <script type="text/javascript">
+							      google.charts.load('current', {'packages':['corechart']});
+							      google.charts.setOnLoadCallback(drawChart);
+							
+							      function drawChart() {
+							        var data = google.visualization.arrayToDataTable([
+							          ['Year', 'Sales', 'Expenses'],
+							          ['2004',  1000,      400],
+							          ['2005',  1170,      460],
+							          ['2006',  660,       1120],
+							          ['2007',  1030,      540]
+							        ]);
+							
+							        var options = {
+							          title: 'Company Performance',
+							          curveType: 'function',
+							          legend: { position: 'bottom' }
+							        };
+							
+							        var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
+							
+							        chart.draw(data, options);
+							      }
+							    </script>
+							  </head>
+							  <body>
+							    <div id="curve_chart" style="width: 900px; height: 500px"></div>
+							  </body>
+							</html>
+					</div>
+			</div>
+		</div>
+</div>
+</html>

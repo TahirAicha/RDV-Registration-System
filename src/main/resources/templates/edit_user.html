@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html   xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:th="http://www.thymeleaf.org"
+        xmlns:layout="http://www.w3.org/1999/xhtml" layout:decorate="~{fragments/main_layout}"
+        >
+<div layout:fragment="content" class="container">
+			<div class="col-md-6 col-md-offset-3">
+				<div class="panel panel-primary">
+					<div class="panel-heading" >Modifier utilisateur</div>
+					<div class="panel-body">
+							
+							<div>
+								<form th:action="@{/addUser}" th:object="${user}" method="post" >
+								<div>
+								<label>Utilisateur</label>
+								<input type ="text" name="cin" th:field="*{cin}" readonly="readonly"/>
+								<!-- <label th:text="${cin}"></label> -->
+								</div>
+								<div>
+								<label>Nom</label>
+								<input type ="text" name="nom" th:field="*{nom}" />
+								
+								</div>
+								<div>
+								<label>Prenom</label>
+								<input type ="text" name="prenom" th:field="*{prenom}" />
+								</div>
+								<div>
+								<label>adresse</label>
+								<input type ="text" name="adresse" th:field="*{adresse}" />
+								</div>
+								<div>
+								<label>Date De Naissance</label>
+								<input type ="text" name="DateDeNaissance" th:field="*{DateDeNaissance}" />
+								</div>
+								<div id="test">
+								<label>Mot de passe</label>
+								<input type ="text" name="mdp" th:field="*{mdp}" />
+								</div>
+								
+								<div>
+									<input type="radio" name="active" value="oui" checked="checked" onChange="document.getElementById('test').style.diaplay='none'"/>
+									<label>Oui</label>
+									<input type="radio" name="active" value="non" checked="checked" onChange="document.getElementById('test').style.diaplay='none'"/>
+									<label>Non</label>
+									
+								</div>
+								<button type="submit" class="btn btn-primary">OK</button>
+							</form>
+							</div>
+					</div>
+				</div>
+			</div>
+	</div>
+</body>
+</html>
+
+

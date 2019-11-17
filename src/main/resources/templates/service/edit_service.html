@@ -1,0 +1,55 @@
+
+
+<html   xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:th="http://www.thymeleaf.org"
+        xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+        xmlns:layout="http://www.w3.org/1999/xhtml" layout:decorate="~{fragments/main_layout}">
+
+ <div layout:fragment="content" class="container">
+	<div class="col-md-10">
+				<div class="panel panel-primary" >
+					<div class="panel-heading" >Modifier le service</div>
+					<div class="panel-body">
+							<form th:action="@{/addService}"  th:object="${service}" method="post">
+								
+							<div>
+								
+								<div class="form-group">
+										 <label>Categorie de service</label>
+										 <div class="col-md-5">
+											     <div th:if="${categorieList != null and not #lists.isEmpty(categorieList)}">
+											         <select name="categorie" th:field="*{categorie}"  >
+											             <option th:each="dropDownItem : ${categorieList}"
+											                             th:value="${dropDownItem.id}"
+											                             th:text="${dropDownItem.designation}"  />
+											         </select>
+											    </div>
+											    <div th:if="${categorieList == null or #lists.isEmpty(categorieList)}">
+											        <div>"pas de categorie"</div>
+											    </div>
+										</div>
+								</div>
+								</div>
+								<br/>
+								<div>
+								<label>Designation</label>
+								<input type ="text" name="designation" th:field="*{designation}"  />
+								</div>
+								
+								<div>
+								<label>Durée de rendez vous</label>
+								<input type ="text" name="duree" th:field="*{duree}"/>
+								</div>
+								<div>
+								<label>Prix</label>
+								<input type="text" name="prix" th:field="*{prix}"/>
+								</div>
+							
+								<button type="submit" class="btn btn-primary">Enregistrer</button>
+							</form>
+					</div>
+				</div>
+			</div>
+
+</div>
+</html>

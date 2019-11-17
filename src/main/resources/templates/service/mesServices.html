@@ -1,0 +1,112 @@
+<html   xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:th="http://www.thymeleaf.org"
+        xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+        xmlns:layout="http://www.w3.org/1999/xhtml" layout:decorate="~{fragments/main_layout2}">		
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" type="text/css" th:href="@{/css/style.css}">
+<script type="text/javascript" th:src="@{/js/jss.js}" ></script>
+
+</head>
+ <div layout:fragment="content" class="container">
+ <!-- <a th:href="@{/rdv}">Ajouter un rendez vous </a> -->
+
+<div class="wrapper">
+
+
+<!-- <p>Click on the buttons inside the tabbed menu:</p> -->
+
+<div class="tab">
+  <button class="tablinks" onclick="openTab(event, 'tab1')" id="defaultOpen">Ajouter un nouveau service</button>
+  <button class="tablinks" onclick="openTab(event, 'tab2')">Liste des services</button>
+  <button class="tablinks" onclick="openTab(event, 'tab3')">...</button>
+</div>
+<div id="tab1" class="tabcontent"   >
+  <!-- <h3>Ajouter un nouveau service</h3> -->
+  <p><div class="col-md-20">
+				<div class="panel panel-primary" >
+					
+					<div class="panel-body">
+							<form th:action="@{/addService}" method="post"  th:object="${service}" >
+								
+							<div>
+								
+								<div class="form-group">
+										 <label>Categorie de service</label>
+										
+											     <div th:if="${categorieList != null and not #lists.isEmpty(categorieList)}">
+											         <select name="categorie" class="form-control" th:field="*{categorie}">
+											             <option th:each="dropDownItem : ${categorieList}"
+											                             th:value="${dropDownItem.id}"
+											                             th:text="${dropDownItem.designation}"  />
+											         </select>
+											    </div>
+											    <div th:if="${categorieList == null or #lists.isEmpty(categorieList)}">
+											        <div>"pas de categorie"</div>
+											    </div>
+										
+								</div>
+								</div>
+								
+								 <div class="form-group">
+								<label>Designation</label>
+								<input type ="text" name="designation" class="form-control" th:field="*{designation}" />
+								</div>
+								
+								<div class="form-group">
+								<label>Durée de rendez vous</label>
+								<input type ="text" name="duree" class="form-control" th:field="*{duree}" />
+								</div>
+								<div class="form-group">
+								<label>Prix</label>
+								<input type="text" name="prix" class="form-control" th:field="*{prix}"/>
+								</div>
+							
+								<button type="submit" class="btn btn-primary">Enregistrer</button>
+								<button type="submit" class="btn btn-primary">Annuler</button>
+							</form>
+					</div>
+				</div>
+			</div>
+
+</div></p> 
+
+
+<div id="tab2" class="tabcontent" style="display: none;">
+ 
+  <p>
+
+<div class="col-md-20">
+				<div class="panel panel-primary" >
+					
+					<div class="panel-body">
+							<table class= "table table-striped">
+								<tr>
+								<th>Categorie de service</th><th>Designation</th><th>Durée de rendez vous</th><th>prix</th><th>Action</th>
+								</tr>
+								<tr th:each="srv: ${listServices}"  >
+									<!-- <td th:text="${rdv.categorie}"></td> -->
+									<td th:text="${srv.categorie.designation}"></td>
+									<td th:text="${srv.designation}"></td>
+									<td th:text="${srv.duree}"></td>
+									<td th:text="${srv.prix}"></td>
+									<td>
+		            					<a class="btn btn-warning btn-xs" th:href="@{'/editService/'+${srv.id}}">Modifier</a>
+								        <a class="btn btn-danger btn-xs" th:href="@{'/deleteService/'+${srv.id}}">Supp</a>
+		         				    </td>
+									
+								</tr>
+							</table>
+					</div>
+				</div>
+</div></p>
+</div>
+
+
+<div id="tab3" class="tabcontent" style="display: none;">
+  <h3>...</h3>
+  <p>A refaire.</p>
+</div>
+
+</div>
+</html> 

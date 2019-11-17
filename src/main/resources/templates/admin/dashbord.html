@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html   xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:th="http://www.thymeleaf.org"
+        xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+        xmlns:layout="http://www.w3.org/1999/xhtml" layout:decorate="~{fragments/main_layout}">
+
+ <div layout:fragment="content" class="container">
+ 			<div>Bonjour</div>
+ 			<div sec:authorize="hasRole('ADMIN')">Text visible to admin.</div>
+			<div th:text="${userName}"> </div>
+			<div sec:authorize="hasRole('ADMIN')">
+				<span th:text="${#authentication.getPrincipal().getUsername()}"></span>
+                    This content is only shown to administrators.
+                </div>
+			<div class="col-md-6"  >
+			
+				<div th:if="${#request.isUserInRole('ADMIN')}">
+				<span th:text="${#authentication.getPrincipal().getUsername()}"></span>
+                    This content is only shown to administrators.
+                </div>
+				<div class="panel panel-primary">
+					<div class="panel-heading" >Search</div>
+					<div class="panel-body">
+							<form th:action="@{/getUser}" method="get">
+								<div>
+								 
+									<label>Cin:</label>
+									<input type="text" name="cin"/>
+									<button type="submit" class="btn btn-primary">OK</button>
+								</div>
+							</form>
+							<div class="text-danger" th:if="${exception}" th:text="${exception.message}"></div>
+					</div>
+				</div>
+			</div>
+	
+			<div class="col-md-6">
+				<div class="panel panel-primary" th:if="${user}" >
+					<div class="panel-heading" >User</div>
+					<div class="panel-body">
+						<div>
+							<label>Cin:</label>
+							<label th:text="${user.cin}" ></label>
+						</div>	
+						<div>
+							<label>Nom:</label>
+							<label th:text="${user.nom}" ></label>
+						</div>	
+						<div>
+							<label>Prenom:</label>
+							<label th:text="${user.prenom}" ></label>
+						</div>	
+						<div>
+							<label>Adresse:</label>
+							<label th:text="${user.adresse}" ></label>
+						</div>
+							
+					</div>
+				</div>
+			</div>
+	
+	
+			<div class="col-md-6">
+				<div class="panel panel-primary" th:if="${listUsers}" >
+					<div class="panel-heading" >Liste utilisateurs</div>
+					<div class="panel-body">
+							<table class= "table table-striped">
+								<tr>
+								<th>Cin</th><th>Nom</th><th>Prenom</th><th>Adresse</th><th>Date de naissance</th><th>Active</th><th>Action</th>
+								</tr>
+								<tr th:each="u:${listUsers}" >
+									<td th:text="${u.cin}"></td>
+									<td th:text="${u.nom}"></td>
+									<td th:text="${u.prenom}"></td>
+									<td th:text="${u.adresse}"></td>
+									<td th:text="${u.DateDeNaissance}"></td>
+									<td th:text="${u.active}"></td>
+									<td>
+	            					<a class="btn btn-warning btn-xs" th:href="@{'/edit/'+${u.cin}}">Modifier</a>
+							        <a class="btn btn-danger btn-xs" th:href="@{'/delete/'+${u.cin}}">Supp</a>
+		         				    </td>
+									
+								</tr>
+							</table>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-6" sec:authorize="hasRole('ROLE_ADMIN')">
+				<div class="panel panel-primary" >
+					<div class="panel-heading" >Ajouter Utilisateur</div>
+					<div class="panel-body">
+							<form th:action="@{/addUser}" method="post" >
+								<div>
+								<label>Utilisateur</label>
+								<input type ="text" name="cin"/>
+								<!-- <label th:text="${cin}"></label> -->
+								</div>
+								<div>
+								<label>Nom</label>
+								<input type ="text" name="nom" />
+								
+								</div>
+								<div>
+								<label>Prenom</label>
+								<input type ="text" name="prenom" />
+								</div>
+								<div>
+								<label>Email</label>
+								<input type ="email" name="email" />
+								</div>
+								<div>
+								<label>Téléphone</label>
+								<input type ="text" name="tel" />
+								</div>
+								<div>
+								<label>adresse</label>
+								<input type ="text" name="adresse" />
+								</div>
+								<div>
+								<label>Date De Naissance</label>
+								<input type ="date"  path="DateDeNaissance" pattern="yyyy-MM-dd" name="DateDeNaissance" />
+								</div>
+								
+               
+								<div id="test">
+								<label>Mot de passe</label>
+								<input type ="text" name="mdp" />
+								</div>
+								
+								<div>
+									<input type="radio" name="active" value="oui" checked="checked" onChange="document.getElementById('test').style.diaplay='none'"/>
+									<label>Oui</label>
+									<input type="radio" name="active" value="non" checked="checked" onChange="document.getElementById('test').style.diaplay='none'"/>
+									<label>Non</label>
+									
+								</div>
+								<button type="submit" class="btn btn-primary">OK</button>
+							</form>
+					</div>
+				</div>
+			</div>
+	
+	</div>	
+	
+
+</html>

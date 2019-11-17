@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Créer un compte</title>
+<!-- link rel="stylesheet" type="text/css" th:href="@{/css/registration.css}" /-->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body style="background-color: #fff;">
+<div  th:if="${(edit == null) }" th:replace="fragments/header2 :: header2"></div>
+
+    
+<div layout:fragment="content">
+	
+	<div class="container-fluid">
+
+				<div class="row col-lg-6 col-lg-offset-3" style=" background-color: #fff; padding: 20px; border: solid 1px #ddd;">
+					<form autocomplete="off" action="#" th:action="@{/s_signup}" th:object="${emp}" method="post" class="form-signin" role="form">
+						<h3 class="form-signin-heading" style="padding: 10px" >Créer un compte</h3>
+						<div class="form-group">
+								
+								<input type ="text" name="cin" th:field="*{cin}" placeholder="CIN" class="form-control" />
+						</div>
+						<div class="form-group">
+							<div class="">
+								
+								<input type="text" th:field="*{nom}" placeholder="nom" class="form-control" />
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="">
+								
+								<input type="text" th:field="*{prenom}" placeholder="Prenom" class="form-control" />
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="">
+								
+								<input type="text" th:field="*{email}" placeholder="Email" class="form-control" />
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="">
+								
+								<input type="password" th:field="*{mdp}" placeholder="Mot de passe" class="form-control" />
+							</div>
+						</div>
+						
+						<div class="form-group">
+							
+								<input type ="text" name="tel" th:field="*{tel}" placeholder="Numero de telephone" class="form-control"  />
+						</div>
+						<div class="form-group">
+								
+								<input type ="text" name="adresse" th:field="*{adresse}" placeholder="Adresse" class="form-control" />
+						</div>
+						<div class="form-group">
+								<label>Date de naissance</label>
+								<input type ="date"  path="DateDeNaissance" pattern="yyyy-MM-dd" name="DateDeNaissance" th:field="*{DateDeNaissance}" placeholder="Date de naissance" class="form-control" />
+						</div>
+								
+               
+							
+				<div class="form-group">
+					<div class="">
+						<button type="submit" class="btn btn-primary btn-block">Register emp</button>
+					</div>
+				</div>
+				<span th:utext="${successMessage}"></span>
+				<div class="alert alert-success alert-dismissible col-sm-12"
+					th:if="${(bindingResult != null && bindingResult.getAllErrors() != null)}">
+					<button type="button" class="close" data-dismiss="alert"
+						aria-hidden="true">×</button>
+					<ul th:each="data : ${bindingResult.getAllErrors()}">
+						<li th:text="${data.getObjectName() + ' :: ' + data.getDefaultMessage()}"></li>
+					</ul>
+				</div>
+			</form>
+		</div>
+	</div>
+</body>
+</html>

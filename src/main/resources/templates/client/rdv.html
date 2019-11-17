@@ -1,0 +1,164 @@
+<html   xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:th="http://www.thymeleaf.org"
+        xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+        xmlns:layout="http://www.w3.org/1999/xhtml" >
+        
+		
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" type="text/css" th:href="@{/css/style.css}">
+<script type="text/javascript" th:src="@{/js/jss.js}" ></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+</head>
+ <body>
+<div th:replace="fragments/header3 :: header3" ></div>
+<!-- <p>Click on the buttons inside the tabbed menu:</p> -->
+<div class="wrapper" Style="padding:100px;">
+<div class="tab">
+  <button class="tablinks" onclick="openTab(event, 'tab1')" id="defaultOpen">Notifications</button>
+  <button class="tablinks" onclick="openTab(event, 'tab2')">Rendez-vous non confirmés</button>
+  <button class="tablinks" onclick="openTab(event, 'tab3')">Ajouter un rendez vous</button>
+</div>
+<div id="tab1" class="tabcontent" >
+  
+  <p><div class="col-md-20">
+				<div class="panel panel-primary" >
+				
+					<div class="panel-body">
+							<table class= "table table-striped">
+								<tr>
+								<th>Categorie de service</th><th>Service</th><th>Prestataire</th><th>Date de rendez vous</th><th>Action</th>
+								</tr>
+								<tr th:each="rdv: ${listRdvConfirmes}"  >
+									<!-- <td th:text="${rdv.categorie}"></td> -->
+									<td th:text="${rdv.service.categorie.designation}"></td>
+									<td th:text="${rdv.service.designation}"></td>
+									<td th:text="${rdv.service.employe.nom } "></td>
+									<td  pattern="yyyy-MM-dd HH:mm" th:text="${rdv.dateRdv}"></td>
+									
+									<td>
+									 <a class="btn btn-danger btn-xs" th:href="@{'/deleteApp/'+${rdv.id}}">Annuler</a>
+		         				    </td>
+									
+								</tr>
+							</table>
+					</div>
+				</div>
+	</div></p> 
+</div>
+
+<div id="tab2" class="tabcontent" style="display: none;">
+  
+  <p><div class="col-md-20" th:if="${listRdvNonConfirmes}">
+				<div class="panel panel-primary" >
+					
+					<div class="panel-body">
+							<table class= "table table-striped">
+								<tr>
+								<th>Categorie de service</th><th>Service</th><th>Prestataire</th><th>Date de rendez vous</th><th>Action</th>
+								</tr>
+								<tr th:each="rdv: ${listRdvNonConfirmes}"  >
+									<!-- <td th:text="${rdv.categorie}"></td> -->
+									<td th:text="${rdv.service.categorie.designation}"></td>
+									<td th:text="${rdv.service.designation}"></td>
+									<td th:text="${rdv.service.employe.nom } "></td>
+									<td th:text="${rdv.dateRdv}"></td>
+									
+									<td>
+	            					<a class="btn btn-warning btn-xs" th:href="@{'/editApp/'+${rdv.id}}">Modifier</a>
+							        <a class="btn btn-danger btn-xs" th:href="@{'/deleteApp/'+${rdv.id}}">Annuler</a>
+		         				    </td>
+									
+								</tr>
+							</table>
+					</div>
+				</div>
+		</div></p>
+</div>
+
+
+<div id="tab3" class="tabcontent" style="display: none;">
+
+  <p><div class="col-md-12">
+				<div class="panel panel-primary" >
+					<div class="panel-heading" >Prendre un rendez vous</div>
+					<div class="panel-body">
+							<form autocomplete="off" th:action="@{/addApp}"  method="post" >
+								
+							
+								<div class="form-groupl">
+										 <label>Categorie de service</label>
+										 <div   >
+											     <div th:if="${categorieList != null and not #lists.isEmpty(categorieList)}" >
+											         <select name="categorie" class="form-control" >
+											             <option th:each="dropDownItem : ${categorieList}"
+											                             th:value="${dropDownItem.id}"
+											                             th:text="${dropDownItem.designation}" />
+											         </select>
+											    </div>
+											    <div th:if="${categorieList == null or #lists.isEmpty(categorieList)}">
+											        <div class="form-control">"pas de categorie"</div>
+											    </div>
+										</div>
+								</div>
+								
+								
+								<div class="form-group">
+										 <label>Service</label>
+										 <div class="form-group">
+											     <div th:if="${serviceList != null and not #lists.isEmpty(serviceList)}"  >
+											         <select name="service" class="form-control" >
+											             <option th:each="dropDownItem : ${serviceList}"
+											                             th:value="${dropDownItem.id}"
+											                             th:text="${dropDownItem.designation}" />
+											         </select>
+											    </div>
+											    <div th:if="${serviceList == null or #lists.isEmpty(serviceList)}">
+											        <div>"pas de categorie"</div>
+											    </div>
+										</div>
+								</div>
+								
+								
+								
+								<div class="form-group">
+										 <label>Prestataire de service</label>
+										 <div >
+											     <div th:if="${preList != null and not #lists.isEmpty(preList)}" >
+											         <select name="utilisateur" class="form-control" >
+											             <option th:each="dropDownItem : ${preList}"
+											                             th:value="${dropDownItem.cin}"
+											                             th:text="${dropDownItem.nom}"  />
+											         </select>
+											    </div>
+											    <div th:if="${preList == null or #lists.isEmpty(preList)}">
+											        <div>"pas de categorie"</div>
+											    </div>
+										</div>
+								</div>
+								
+								<div class="form-group">
+								<label>Date</label>
+								<input type="datetime-local" name="date" class="form-control" />
+								</div>
+							
+								<button type="submit" class="btn btn-primary">Enregistrer</button>
+								
+								
+							</form>
+					</div>
+				</div>
+			</div>
+
+</div></p>
+</div>
+
+
+
+</div>
+   </body>
+
+</html> 

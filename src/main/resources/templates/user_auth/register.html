@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" >
+<head>
+<title>Créer un compte</title>
+<!-- link rel="stylesheet" type="text/css" th:href="@{/css/registration.css}" /-->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+</head>
+<body style="background-image: url('https://image.freepik.com/vector-gratis/resumen-estructuras-moleculares-hexagonales-tecnologia_41981-567.jpg') !important; background-size: cover;
+ background-repeat: no-repeat;">
+<div th:if="${(currentUserRole == null)}">
+<div  th:replace="fragments/header2 :: header2"></div>
+</div>
+<div th:if="${(currentUserRole == 'ADMIN') }"><div  th:replace="fragments/header :: header"></div></div>
+
+<div th:if="${currentUserRole== 'EMPLOYE'}"><div  th:replace="fragments/headerEmp :: headerEmp"></div></div>
+<div th:if="${(currentUserRole == 'CLIENT') }"><div  th:replace="fragments/header3 :: header3"></div></div>
+
+    
+    
+<div layout:fragment="content">
+	
+	<div class="container-fluid">
+
+				<div class="row col-lg-6 col-lg-offset-3" style=" background-color: #fff; padding: 20px; border: solid 1px #ddd;">
+					<form autocomplete="off" th:action="@{/signup}" th:object="${user}" method="post"   id="myForm" class="form-signin" role="form">
+						<h3 class="form-signin-heading" style="padding: 10px; margin-top:10px;" >Créer un compte</h3>
+						<div class="form-group">
+								
+								<input type ="text" name="cin" th:field="*{cin}" placeholder="CIN" class="form-control" />
+						</div>
+						<div class="form-group">
+							<div class="">
+								
+								<input type="text" th:field="*{nom}" placeholder="nom" class="form-control" />
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="">
+								
+								<input type="text" th:field="*{prenom}" placeholder="Prenom" class="form-control" />
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="">
+								
+								<input type="text" th:field="*{email}" placeholder="Email" class="form-control" />
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="">
+								
+								<input type="password" th:field="*{mdp}" placeholder="Mot de passe" class="form-control" />
+							</div>
+						</div>
+						
+						<div class="form-group">
+							
+								<input type ="text" name="tel" th:field="*{tel}" placeholder="Numero de telephone" class="form-control"  />
+						</div>
+						<div class="form-group">
+								
+								<input type ="text" name="adresse" th:field="*{adresse}" placeholder="Adresse" class="form-control" />
+						</div>
+						<div class="form-group">
+								<label>Date de naissance</label>
+								<input type ="date"  path="DateDeNaissance" pattern="yyyy-MM-dd" name="DateDeNaissance" th:field="*{DateDeNaissance}" placeholder="Date de naissance" class="form-control" />
+						</div>
+								
+               
+							
+				<div class="form-group">
+					<div class="">
+						<button type="submit" class="btn btn-primary btn-block" value="submit">Enregistrer</button>
+						
+					</div>
+				</div>
+				
+				<div class="alert alert-success alert-dismissible col-sm-12"
+					th:if="${(bindingResult != null && bindingResult.getAllErrors() != null)}">
+					<button type="button" class="close" data-dismiss="alert"
+						aria-hidden="true">×</button>
+					<ul th:each="data : ${bindingResult.getAllErrors()}">
+						<li th:text="${data.getObjectName() + ' :: ' + data.getDefaultMessage()}"></li>
+						
+					</ul>
+					
+				</div>
+			</form>
+		</div>
+	</div>
+	<!-- <div class="modal fade" tabindex="-1" role="dialog" id="myModal">
+		  <div class="modal-dialog" role="document">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		        <h4 class="modal-title">Vérification de l'adresse email </h4>
+		      </div>
+		      <div class="modal-body">
+		      		<p><span th:text="${successMessage}"></span>
+				 	<span th:text="${emailId}"></span>
+				 	<span th:text="${emailId}" ></span>
+		        &hellip;</p>
+		      </div>
+		      <div class="modal-footer">
+		        <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
+		        <button type="button" class="btn btn-primary"></button>
+		      </div>
+		    </div>/.modal-content
+		  </div>/.modal-dialog
+		</div>/.modal -->
+		<script>$('#myForm').on('submit', function(e){
+							  $('#myModal').modal('show');
+							  e.preventDefault();
+							});
+				</script>
+</body>
+</html>

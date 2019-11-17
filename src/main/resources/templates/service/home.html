@@ -1,0 +1,93 @@
+<html   xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:th="http://www.thymeleaf.org"
+        xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+        xmlns:layout="http://www.w3.org/1999/xhtml" layout:decorate="~{fragments/main_layout2}">
+        
+		
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" type="text/css" th:href="@{/css/style.css}">
+<script type="text/javascript" th:src="@{/js/jss.js}" ></script>
+
+</head>
+ <div layout:fragment="content" class="container">
+
+
+<h2>Rendez-vous</h2>
+<!-- <p>Click on the buttons inside the tabbed menu:</p> -->
+<div class="wrapper">
+<div class="tab">
+  <button class="tablinks" onclick="openTab(event, 'tab1')" id="defaultOpen">Notifications</button>
+  <button class="tablinks" onclick="openTab(event, 'tab2')">Nouveaux rendez-vous</button>
+  <button class="tablinks" onclick="openTab(event, 'tab3')">Ajouter un rendez vous</button>
+</div>
+<div id="tab1" class="tabcontent" >
+  
+  <p><div class="col-md-20">
+				<div class="panel panel-primary" >
+					
+					<div class="panel-body">
+							<table class= "table table-striped">
+								<tr>
+								<th>Categorie de service</th><th>Service</th><th>Prestataire</th><th>Date de rendez vous</th><th>Action</th>
+								</tr>
+								<tr th:each="rdv: ${listRdvConfirmes}"  >
+									<!-- <td th:text="${rdv.categorie}"></td> -->
+									<td th:text="${rdv.service.categorie.designation}"></td>
+									<td th:text="${rdv.service.designation}"></td>
+									<td th:text="${rdv.service.employe.nom } "></td>
+									<td th:text="${rdv.dateRdv}"></td>
+									
+									<td>
+	            					
+							        <a class="btn btn-danger btn-xs" th:href="@{'/deleteApp/'+${rdv.id}}">Annuler</a>
+		         				    </td>
+									
+								</tr>
+							</table>
+					</div>
+				</div>
+</div></p> 
+</div>
+
+<div id="tab2" class="tabcontent" style="display: none;">
+  
+  <p><div class="col-md-20">
+				<div class="panel panel-primary" >
+					
+					<div class="panel-body">
+							<table class= "table table-striped">
+								<tr>
+								<th>Categorie de service</th><th>Service</th><th>Prestataire</th><th>Date de rendez vous</th><th>Action</th>
+								</tr>
+								<tr th:each="rdv: ${listRdv}"  >
+									<!-- <td th:text="${rdv.categorie}"></td> -->
+									<td th:text="${rdv.service.categorie.designation}"></td>
+									<td th:text="${rdv.service.designation}"></td>
+									<td th:text="${rdv.service.employe.nom } "></td>
+									<td th:text="${rdv.dateRdv}"></td>
+									
+									<td>
+	            					<a class="btn btn-warning btn-xs" th:href="@{'/confirmer/'+${rdv.id}}">Confirmer</a>
+							        <a class="btn btn-danger btn-xs" th:href="@{'/deleteApp/'+${rdv.id}}">Annuler</a>
+		         				    </td>
+									
+								</tr>
+							</table>
+					</div>
+				</div>
+</div></p>
+</div>
+
+
+<div id="tab3" class="tabcontent" style="display: none;">
+  <h3>Ajouter un rendez-vous</h3>
+  <p>A refaire.</p>
+</div>
+
+
+
+</div>
+   
+</div>
+</html> 

@@ -1,0 +1,65 @@
+<html   xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:th="http://www.thymeleaf.org"
+        xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+        xmlns:layout="http://www.w3.org/1999/xhtml" layout:decorate="~{fragments/main_layout}">
+
+ <div layout:fragment="content" class="container">
+	<div class="col-md-6">
+				<div class="panel panel-primary" >
+					<div class="panel-heading" >Ajouter Utilisateur</div>
+					<div class="panel-body">
+							<form th:action="@{/addUser}" method="post" >
+								<div>
+								<label>Utilisateur</label>
+								<input type ="text" name="cin"/>
+								<!-- <label th:text="${cin}"></label> -->
+								</div>
+								<div>
+								<label>Nom</label>
+								<input type ="text" name="nom" />
+								
+								</div>
+								<div>
+								<label>Prenom</label>
+								<input type ="text" name="prenom" />
+								</div>
+								<div>
+								<label>Email</label>
+								<input type ="email" name="email" />
+								</div>
+								<div>
+								<label>Téléphone</label>
+								<input type ="text" name="tel" />
+								</div>
+								<div>
+								<label>adresse</label>
+								<input type ="text" name="adresse" />
+								</div>
+								<div>
+								<label>Date De Naissance</label>
+								<input type ="date"  path="DateDeNaissance" pattern="yyyy-MM-dd" name="DateDeNaissance" />
+								</div>
+								
+               
+								<div id="test">
+								<label>Mot de passe</label>
+								<input type ="text" name="mdp" />
+								</div>
+								
+								<div>
+									<input type="radio" name="active" value="oui" checked="checked" onChange="document.getElementById('test').style.diaplay='none'"/>
+									<label>Oui</label>
+									<input type="radio" name="active" value="non" checked="checked" onChange="document.getElementById('test').style.diaplay='none'"/>
+									<label>Non</label>
+									
+								</div>
+								<button type="submit" class="btn btn-primary">OK</button>
+							</form>
+							<a th:href="@{/login}"><button>Enregistrer</button></a>
+							
+					</div>
+				</div>
+			</div>
+
+</div>
+</html>

@@ -1,0 +1,33 @@
+<header th:fragment="header2" xmlns:th="http://www.w3.org/1999/xhtml">
+    <!-- Static navbar -->
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
+                        aria-expanded="false" aria-controls="navbar">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" th:href="@{/}">Home</a>
+            </div>
+            <div id="navbar" class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <!-- <li class=""><a th:href="@{/home}">Users</a></li>
+                    <li><a href="/rdv">RDV</a></li>
+                    <li><a href="/mesServices">Services</a></li> -->
+                </ul>
+              
+                <ul class="nav navbar-nav navbar-right">
+                    <!-- <li class="active"><a href="./">Default <span class="sr-only">(current)</span></a></li>
+                    <li><a href="../navbar-static-top/">Static top</a></li> -->
+                    <li><a href="/login">Connexion</a></li>
+                    <li th:if="${user}"><a  href="/signup"><button type="button" class="btn btn-danger"  style="margin-top:-5px;">S'inscrire</button></a></li>
+                    <li th:if="${emp}"><a  href="/s_signup"><button type="button" class="btn btn-danger"  style="margin-top:-5px;">S'inscrire</button></a></li>
+                    
+                </ul>
+            </div><!--/.nav-collapse -->
+        </div><!--/.container-fluid -->
+    </nav>
+</header>
